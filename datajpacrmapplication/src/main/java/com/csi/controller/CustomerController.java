@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.w3c.dom.stylesheets.LinkStyle;
 
 import javax.validation.Valid;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,6 +35,11 @@ public class CustomerController {
 
         return ResponseEntity.ok(customerServiceImpl.signIn(custEmailId, custPassword));
 
+    }
+
+    @GetMapping("/sortbyname")
+    public ResponseEntity<List<Customer>> sortByName() {
+        return ResponseEntity.ok(customerServiceImpl.findAll().stream().sorted(Comparator.comparing(Customer::getCustName)).toList());
     }
 
     @GetMapping("/findbyid/{custId}")
